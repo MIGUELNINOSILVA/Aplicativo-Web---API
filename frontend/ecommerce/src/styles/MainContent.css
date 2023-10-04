@@ -53,3 +53,9 @@
       transform: translateY(0);
   }
 }
+
+@media (min-width: 768px) {
+  .d-flex.flex-row.mb-3.justify-content-between.flex-wrap.gap-5 {
+    justify-content: center!important;
+  }
+}

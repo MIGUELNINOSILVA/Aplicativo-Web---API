@@ -22,7 +22,7 @@ export const MainContent = () => {
         id="carouselExampleIndicators"
         className="carousel slide"
         data-bs-ride="carousel"
-        data-bs-interval="1000"
+        data-bs-interval="3000"
       >
         <div className="carousel-indicators">
           <button
@@ -165,39 +165,6 @@ export const MainContent = () => {
                 in practice. / Please note that body builds vary by person,
                 therefore, detailed size information should be reviewed below on
                 the product description.
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Typography component="legend">Rating</Typography>
-              <Rating
-                name="simple-controlled"
-                value={5}
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                }}
-              />
-              <IconButton aria-label="add to favorites">
-                <FavoriteBorderIcon />
-              </IconButton>
-            </CardActions>
-          </Card>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-              sx={{ height: 150, width: 150, marginLeft: 5 }}
-              image="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"
-              title="shirt"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Mens Casual Premium Slim Fit T-Shirts
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Slim-fitting style, contrast raglan long sleeve, three-button
-                henley placket, light weight & soft fabric for breathable and
-                comfortable wearing. And Solid stitched shirts with round neck
-                made for durability and a great fit for casual fashion wear and
-                diehard baseball fans. The Henley style round neckline includes
-                a three-button placket.
               </Typography>
             </CardContent>
             <CardActions>
