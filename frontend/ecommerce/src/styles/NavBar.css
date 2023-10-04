@@ -1,0 +1,11 @@
+.navbar-brand img{
+  width: 55px;
+}
+
+/* App.css */
+
+.fixed-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}

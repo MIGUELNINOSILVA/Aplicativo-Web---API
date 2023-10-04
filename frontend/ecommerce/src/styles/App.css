@@ -1,0 +1,13 @@
+.main-content{
+  animation: aparecer 2s ease-in-out;
+}
+
+/* Keyframes */
+@keyframes aparecer {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
