@@ -84,7 +84,7 @@ export const MainContent = () => {
       </div>
       <div className="container mt-5">
         <h1>Ofertas</h1>
-        <div className="d-flex flex-row mb-3 justify-content-between flex-wrap">
+        <div className="d-flex flex-row mb-3 justify-content-between flex-wrap gap-5">
           <Card sx={{ maxWidth: 345 }}>
             <CardMedia
               sx={{ height: 150, width: 150, marginLeft: 5 }}
