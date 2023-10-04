@@ -1,23 +1,17 @@
-.navbar-brand img {
-  width: 55px;
+.img-home{
+    width: 7rem;
 }
 
-/* App.css */
-
-.fixed-navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+@media (min-width: 768px) and (max-width: 1024px) {
+    .img-home{
+        width: 5rem;
+        height: 5rem;
+    }
 }
 
-@media (min-width: 768px) {
-  /* Agrega estos estilos a tu hoja de estilos CSS */
-  .img-home {
-    max-width: 100px; /* Ajusta el valor según el tamaño deseado */
-    height: auto; /* Esto asegura que la imagen mantenga su proporción */
-  }
-
-  .navbar-brand img {
-    width: 12px;
-  }
+@media (max-width: 768px) {
+    .img-home{
+        width: 5rem;
+        height: 5rem;
+    }
 }

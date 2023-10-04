@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import { Avatar, Badge } from "@mui/material";
 import { Link } from "react-router-dom";
 import { deepOrange, deepPurple } from "@mui/material/colors";
+import './../styles/NavBar.css';
 
 export const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary main-content fixed-navbar">
-      <div className="container-fluid container-navigations-navbar">
+      <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <img className="img-home" src="src/assets/logo.png" alt="Logo" />
         </Link>

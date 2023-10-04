@@ -1,4 +1,4 @@
-import '../styles/FooterPage.css';
+import './../styles/FooterPage.css';
 
 
 export const FooterPage = () => {

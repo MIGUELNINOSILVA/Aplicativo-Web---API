@@ -13,7 +13,7 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import "../styles/MainContent.css";
 import { red } from "@mui/material/colors";
-import { FooterPage } from "../components/FooterPage";
+import { FooterPage } from "./../Pages/FooterPage";
 
 export const MainContent = () => {
   return (
