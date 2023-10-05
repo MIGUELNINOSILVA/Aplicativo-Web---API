@@ -18,42 +18,42 @@ import { UserContext } from "./context/UserLoginContext";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 
 export const App = () => {
-  const { isAuthenticated } = useContext(UserContext);
+  const { isAuthenticated, userLogin } = useContext(UserContext);
 
   return (
     <>
       <ProductProvider>
-        {isAuthenticated && <NavBar /> }
+        {userLogin && <NavBar /> }
         <Routes>
         <Route
-          path="/"
+          path={"/" || "/men" || "/woman" || "/child-boy" || "/child-girl" || "/user-information" || "/store-pay"}
           element={
-            isAuthenticated ? (
+            userLogin ? (
               <MainContent />
             ) : (
               <Navigate to="/sign-in" replace /> 
             )
           }
         />
-          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/" />}>
+          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/" />}>
             <Route path="/" element={<MainContent />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/men" />}>
+          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/men" />}>
             <Route path="/men" element={<HombrePage />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/woman" />}>
+          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/woman" />}>
             <Route path="/woman" element={<MujerPage />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/child-boy" />}>
+          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/child-boy" />}>
             <Route path="/child-boy" element={<NinoPage />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/child-girl" />}>
+          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/child-girl" />}>
             <Route path="/child-girl" element={<NinaPage />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/user-information" />}>
+          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/user-information" />}>
             <Route path="/user-information" element={<User />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/store-pay" />}>
+          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/store-pay" />}>
             <Route path="/store-pay" element={<StorePage />} />
           </Route>
           <Route path="/sign-in" element={<SignIn />} />
