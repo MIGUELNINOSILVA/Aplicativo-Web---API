@@ -9,7 +9,7 @@ export const CardComponent = ({title, description, ratingValue, createdByname, c
         <Card sx={{ maxWidth: 345 }}>
           <CardMedia
             sx={{ height: 150, width: 150, marginLeft: 5 }}
-            image={`${urlImage}`}
+            image={urlImage}
             title="shirt"
             alt={title}
           />

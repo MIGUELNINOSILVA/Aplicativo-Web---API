@@ -249,10 +249,7 @@ export const getProductsWoman = async (req, res) => {
     });
   }
 };
-
-
-
-export const getProductsChildBoy = async(req, res)=>{
+export const getProductsChildBoy = async (req, res) => {
   try {
     const products = await Product.aggregate([
       {
@@ -261,17 +258,17 @@ export const getProductsChildBoy = async(req, res)=>{
           localField: "categoria",
           foreignField: "_id",
           as: "categoria",
-        },  
+        },
       },
       {
-        $lookup:{
+        $lookup: {
           from: "usuarios",
           localField: "creado_por",
           foreignField: "_id",
-          as: "creado_por"
-        }
+          as: "creado_por",
+        },
       },
-      { 
+      {
         $unwind: "$categoria",
       },
       {
@@ -281,27 +278,33 @@ export const getProductsChildBoy = async(req, res)=>{
         $match: {
           "categoria.nombre": "Niño",
         },
-      },{
+      },
+      {
         $addFields: {
           categoria: {
-            $mergeObjects: ["$categoria", {
-              nombre_producto: "$nombre",
-              descripcion_producto: "$descripcion",
-              precio_producto: "$precio",
-              imagenURL_producto: "$imagenURL",
-              stock_producto: "$stock",
-              creado_por_producto: "$creado_por",
-              rating: "$rating",
-            }],
+            $mergeObjects: [
+              "$categoria",
+              {
+                nombre_producto: "$nombre",
+                descripcion_producto: "$descripcion",
+                precio_producto: "$precio",
+                imagenURL_producto: "$imagenURL",
+                stock_producto: "$stock",
+                rating: "$rating",
+              },
+            ],
           },
         },
       },
       {
         $addFields: {
           creado_por: {
-            $mergeObjects: ["$creado_por", {
-              nombre: "$creado_por.nombre",
-            }],
+            $mergeObjects: [
+              "$creado_por",
+              {
+                nombre: "$creado_por.nombre",
+              },
+            ],
           },
         },
       },
@@ -311,16 +314,17 @@ export const getProductsChildBoy = async(req, res)=>{
           "categoria.nombre": 1,
           "categoria.descripcion": 1,
           "categoria.imagenURL": 1,
-          "categoria.creado_por": 1,
           "categoria.nombre_producto": 1,
           "categoria.descripcion_producto": 1,
           "categoria.precio_producto": 1,
           "categoria.imagenURL_producto": 1,
           "categoria.stock_producto": 1,
           "categoria.creado_por_producto": 1,
-          "categoria.rating": 1
+          "categoria.rating": 1,
+          "creado_por.nombre": 1,
+          "creado_por.apellido": 1,
         },
-      }
+      },
     ]);
     if (products.length === 0) {
       return res.status(404).json({ message: "Products not found" });
@@ -332,4 +336,92 @@ export const getProductsChildBoy = async(req, res)=>{
       message: error.message || "Something goes wrong retrieving the products",
     });
   }
-}
+};
+export const getProductsChildGirl = async (req, res) => {
+  try {
+    const products = await Product.aggregate([
+      {
+        $lookup: {
+          from: "categorias",
+          localField: "categoria",
+          foreignField: "_id",
+          as: "categoria",
+        },
+      },
+      {
+        $lookup: {
+          from: "usuarios",
+          localField: "creado_por",
+          foreignField: "_id",
+          as: "creado_por",
+        },
+      },
+      {
+        $unwind: "$categoria",
+      },
+      {
+        $unwind: "$creado_por",
+      },
+      {
+        $match: {
+          "categoria.nombre": "Niña",
+        },
+      },
+      {
+        $addFields: {
+          categoria: {
+            $mergeObjects: [
+              "$categoria",
+              {
+                nombre_producto: "$nombre",
+                descripcion_producto: "$descripcion",
+                precio_producto: "$precio",
+                imagenURL_producto: "$imagenURL",
+                stock_producto: "$stock",
+                rating: "$rating",
+              },
+            ],
+          },
+        },
+      },
+      {
+        $addFields: {
+          creado_por: {
+            $mergeObjects: [
+              "$creado_por",
+              {
+                nombre: "$creado_por.nombre",
+              },
+            ],
+          },
+        },
+      },
+      {
+        $project: {
+          "categoria._id": 1,
+          "categoria.nombre": 1,
+          "categoria.descripcion": 1,
+          "categoria.imagenURL": 1,
+          "categoria.nombre_producto": 1,
+          "categoria.descripcion_producto": 1,
+          "categoria.precio_producto": 1,
+          "categoria.imagenURL_producto": 1,
+          "categoria.stock_producto": 1,
+          "categoria.creado_por_producto": 1,
+          "categoria.rating": 1,
+          "creado_por.nombre": 1,
+          "creado_por.apellido": 1,
+        },
+      },
+    ]);
+    if (products.length === 0) {
+      return res.status(404).json({ message: "Products not found" });
+    }
+    console.log(products);
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Something goes wrong retrieving the products",
+    });
+  }
+};

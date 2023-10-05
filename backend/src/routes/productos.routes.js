@@ -9,7 +9,8 @@ import {
   deleteProductById,
   getProductsMen,
   getProductsWoman,
-  getProductsChildBoy
+  getProductsChildBoy,
+  getProductsChildGirl
 } from "../controllers/products.controller.js";
 import { verifyToken } from "../middlewares/index.js";
 
@@ -28,5 +29,7 @@ router.post("/men-products", verifyToken, getProductsMen);
 router.post("/woman-products", verifyToken, getProductsWoman);
 
 router.post("/boy-products", verifyToken, getProductsChildBoy);
+
+router.post("/girl-products", verifyToken, getProductsChildGirl);
 
 export default router;
