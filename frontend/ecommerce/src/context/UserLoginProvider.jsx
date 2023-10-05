@@ -2,8 +2,11 @@ import { Alert, AlertTitle, Snackbar } from "@mui/material";
 import { UserContext } from "./UserLoginContext";
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const UserLoginProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState('');
 
   const [user, setUser] = useState({
@@ -28,8 +31,9 @@ export const UserLoginProvider = ({ children }) => {
 
       const data = await response.json();
       setToken(data.token);
+      setIsAuthenticated(true);
+      navigate("/");
     } catch (error) {
-      console.error(error);
       error.message = "Error al iniciar sesión" ? setError(error.message) : false;
     }
   };
@@ -66,9 +70,16 @@ export const UserLoginProvider = ({ children }) => {
       }, 2000);
     }
   }, [error]);
+  useEffect(() => {
+    // Verifica si el usuario está autenticado
+    if (token) {
+      setIsAuthenticated(true);
+    }
+    setLoading(false);
+  }, [token]);
   
   return (
-    <UserContext.Provider value={{ user, addUser }}>
+    <UserContext.Provider value={{ token, addUser, isAuthenticated }}>
       {children}
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>

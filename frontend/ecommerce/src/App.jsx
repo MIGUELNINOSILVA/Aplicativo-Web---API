@@ -11,47 +11,56 @@ import "./styles/App.css";
 import { User } from "./Pages/User";
 import { SignUp } from "./components/SignUp";
 import { SignIn } from "./components/SignIn";
-import { ProductsContext } from "./context/ProductContext";
 import { ProductProvider } from "./context/ProductProvider";
 import { UserLoginProvider } from "./context/UserLoginProvider";
-
-const isAuthenticated = () => {
-  return false;
-};
+import { useContext } from "react";
+import { UserContext } from "./context/UserLoginContext";
+import { ProtectedRoute } from "./utils/ProtectedRoute";
 
 export const App = () => {
+  const { isAuthenticated } = useContext(UserContext);
+
   return (
     <>
-      <UserLoginProvider>
-        <ProductProvider>
-          <Routes>
-            {!isAuthenticated() && null}
-            {isAuthenticated() ? (
-              <>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      <NavBar />
-                      <MainContent />
-                    </>
-                  }
-                />
-                <Route path="/men" element={<HombrePage />} />
-                <Route path="/woman" element={<MujerPage />} />
-                <Route path="/child-boy" element={<NinoPage />} />
-                <Route path="/child-girl" element={<NinaPage />} />
-                <Route path="/store-pay" element={<StorePage />} />
-                <Route path="/user-information" element={<User />} />
-              </>
+      <ProductProvider>
+        {isAuthenticated && <NavBar /> }
+        <Routes>
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <MainContent />
             ) : (
-              <Route path="/" element={<Navigate to="/sign-in"></Navigate>} />
-            )}
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
-          </Routes>
-        </ProductProvider>
-      </UserLoginProvider>
+              <Navigate to="/sign-in" replace /> 
+            )
+          }
+        />
+          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/" />}>
+            <Route path="/" element={<MainContent />} />
+          </Route>
+          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/men" />}>
+            <Route path="/men" element={<HombrePage />} />
+          </Route>
+          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/woman" />}>
+            <Route path="/woman" element={<MujerPage />} />
+          </Route>
+          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/child-boy" />}>
+            <Route path="/child-boy" element={<NinoPage />} />
+          </Route>
+          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/child-girl" />}>
+            <Route path="/child-girl" element={<NinaPage />} />
+          </Route>
+          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/user-information" />}>
+            <Route path="/user-information" element={<User />} />
+          </Route>
+          <Route element={<ProtectedRoute canActivate={isAuthenticated} redirectPath="/store-pay" />}>
+            <Route path="/store-pay" element={<StorePage />} />
+          </Route>
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+
+        </Routes>
+      </ProductProvider>
     </>
   );
 };
