@@ -1,15 +1,21 @@
-import { Button, FormHelperText, Input, InputLabel } from "@mui/material";
-import "./../styles/User.css";
-import FormControl from "@mui/material/FormControl";
+import React, { useContext, useState } from "react";
+import { Button, Input } from "@mui/material";
 import { UserContext } from "../context/UserLoginContext";
-import { useContext, useEffect, useState } from "react";
 
-export const User = ({dataUser}) => {
-  const userData = dataUser;
+export const User = ({ dataUser }) => {
+  const { signOut } = useContext(UserContext);
+  const [userData, setUserData] = useState(dataUser || {});
+
   const handleSignOut = (event) => {
     event.preventDefault();
     signOut();
-  }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
   return (
     <div className="container main-content">
       <div className="user-main-card">
@@ -22,53 +28,57 @@ export const User = ({dataUser}) => {
               <label htmlFor="nombre">Nombre</label>
               <input
                 type="text"
+                name="nombre"
                 id="nombre"
                 className="form-control"
                 placeholder="Ingrese Nombre"
                 value={userData.nombre || ""}
-                onChange={(e) => setUserData({ ...userData, nombre: e.target.value })}
+                onChange={handleInputChange}
               />
             </div>
             <div className="form-group col-auto">
               <label htmlFor="apellido">Apellido</label>
               <input
                 type="text"
+                name="apellido"
                 id="apellido"
                 className="form-control"
                 placeholder="Ingrese Apellido"
                 value={userData.apellido || ""}
-                onChange={(e) => setUserData({ ...userData, apellido: e.target.value })}
+                onChange={handleInputChange}
               />
             </div>
             <div className="form-group col-auto">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
+                name="email"
                 id="email"
                 className="form-control"
-                placeholder="Ingrese Apellido"
+                placeholder="Ingrese Email"
                 value={userData.email || ""}
-                onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                onChange={handleInputChange}
               />
             </div>
             <div className="form-group col-auto">
               <label htmlFor="password">Password</label>
               <input
                 type="password"
+                name="password"
                 id="password"
                 className="form-control"
                 placeholder="Ingrese Contraseña"
                 value={userData.password || ""}
-                onChange={(e) => setUserData({ ...userData, password: e.target.value })}
+                onChange={handleInputChange}
               />
             </div>
             <div className="buttons-effects d-flex gap-2 justify-content-end mt-3">
-            <Button variant="contained" color="primary" type="submit">
-              Editar
-            </Button>
-            <Button variant="contained" color="error" onClick={handleSignOut}>
-              Log out
-            </Button>
+              <Button variant="contained" color="primary" type="submit">
+                Editar
+              </Button>
+              <Button variant="contained" color="error" onClick={handleSignOut}>
+                Log out
+              </Button>
             </div>
           </form>
         </div>
