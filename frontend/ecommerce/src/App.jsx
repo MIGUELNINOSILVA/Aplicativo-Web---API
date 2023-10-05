@@ -13,12 +13,32 @@ import { SignUp } from "./components/SignUp";
 import { SignIn } from "./components/SignIn";
 import { ProductProvider } from "./context/ProductProvider";
 import { UserLoginProvider } from "./context/UserLoginProvider";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./context/UserLoginContext";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
 
 export const App = () => {
   const { isAuthenticated, userLogin } = useContext(UserContext);
+  const {  getUser } = useContext(UserContext);
+  const token = localStorage.getItem("user-token");
+  const tokenObject = JSON.parse(token);
+  const [userData, setUserData] = useState({
+    nombre: "",
+    apellido: "",
+    email: "",
+    password: "",
+  });
+  
+  const fetchData = async () => {
+    const userResponse = await getUser(tokenObject);
+    setUserData(userResponse.user)
+  };
+
+  useEffect(() => {
+    if (tokenObject) {
+      fetchData();
+    }
+  }, [tokenObject]);
 
   return (
     <>
@@ -51,7 +71,7 @@ export const App = () => {
             <Route path="/child-girl" element={<NinaPage />} />
           </Route>
           <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/user-information" />}>
-            <Route path="/user-information" element={<User />} />
+            <Route path="/user-information" element={<User dataUser={userData} />} />
           </Route>
           <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/store-pay" />}>
             <Route path="/store-pay" element={<StorePage />} />

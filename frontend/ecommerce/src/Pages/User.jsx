@@ -4,28 +4,8 @@ import FormControl from "@mui/material/FormControl";
 import { UserContext } from "../context/UserLoginContext";
 import { useContext, useEffect, useState } from "react";
 
-export const User = () => {
-  const { signOut, getUser } = useContext(UserContext);
-  const token = localStorage.getItem("user-token");
-  const tokenObject = JSON.parse(token);
-  const [userData, setUserData] = useState({
-    nombre: "",
-    apellido: "",
-    email: "",
-    password: "",
-  });
-  
-  const fetchData = async () => {
-    const userResponse = await getUser(tokenObject);
-    setUserData(userResponse.user)
-  };
-
-  useEffect(() => {
-    if (tokenObject) {
-      fetchData();
-    }
-  }, [tokenObject]);
-
+export const User = ({dataUser}) => {
+  const userData = dataUser;
   const handleSignOut = (event) => {
     event.preventDefault();
     signOut();
