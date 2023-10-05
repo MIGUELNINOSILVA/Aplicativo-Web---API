@@ -77,3 +77,175 @@ export const deleteProductById = async (req, res) => {
     });
   }
 };
+export const getProductsMen = async (req, res) => {
+  try {
+    const products = await Product.aggregate([
+      {
+        $lookup: {
+          from: "categorias",
+          localField: "categoria",
+          foreignField: "_id",
+          as: "categoria",
+        },
+      },
+      {
+        $unwind: "$categoria",
+      },
+      {
+        $match: {
+          "categoria.nombre": "Hombre",
+        },
+      },
+      {
+        $addFields: {
+          categoria: {
+            $mergeObjects: ["$categoria", {
+              nombre_producto: "$nombre",
+              descripcion_producto: "$descripcion",
+              precio_producto: "$precio",
+              imagenURL_producto: "$imagenURL",
+              stock_producto: "$stock",
+              creado_por_producto: "$creado_por",
+            }],
+          },
+        },
+      },
+      {
+        $project: {
+          "categoria._id": 1,
+          "categoria.nombre": 1,
+          "categoria.descripcion": 1,
+          "categoria.imagenURL": 1,
+          "categoria.creado_por": 1,
+          "categoria.nombre_producto": 1,
+          "categoria.descripcion_producto": 1,
+          "categoria.precio_producto": 1,
+          "categoria.imagenURL_producto": 1,
+          "categoria.stock_producto": 1,
+          "categoria.creado_por_producto": 1,
+        },
+      },
+    ]);
+    if (products.length === 0) {
+      return res.status(404).json({ message: "Products not found" });
+    }
+    console.log(products);
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Something goes wrong retrieving the products",
+    });
+  }
+};
+export const getProductsWoman = async(req, res)=>{
+  try {
+    const products = await Product.aggregate([
+      {
+        $lookup: {
+          from: "categorias",
+          localField: "categoria",
+          foreignField: "_id",
+          as: "categoria",
+        },
+      },{
+        $unwind: "$categoria",
+      },{
+        $match: {
+          "categoria.nombre": "Mujer",
+        },
+      },{
+        $addFields: {
+          categoria: {
+            $mergeObjects: ["$categoria", {
+              nombre_producto: "$nombre",
+              descripcion_producto: "$descripcion",
+              precio_producto: "$precio",
+              imagenURL_producto: "$imagenURL",
+              stock_producto: "$stock",
+              creado_por_producto: "$creado_por",
+            }],
+          },
+        },
+      },{
+        $project: {
+          "categoria._id": 1,
+          "categoria.nombre": 1,
+          "categoria.descripcion": 1,
+          "categoria.imagenURL": 1,
+          "categoria.creado_por": 1,
+          "categoria.nombre_producto": 1,
+          "categoria.descripcion_producto": 1,
+          "categoria.precio_producto": 1,
+          "categoria.imagenURL_producto": 1,
+          "categoria.stock_producto": 1,
+          "categoria.creado_por_producto": 1,
+        },
+      }
+    ]);
+    if (products.length === 0) {
+      return res.status(404).json({ message: "Products not found" });
+    }
+    console.log(products);
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Something goes wrong retrieving the products",
+    });
+  }
+}
+export const getProductsChildBoy = async(req, res)=>{
+  try {
+    const products = await Product.aggregate([
+      {
+        $lookup: {
+          from: "categorias",
+          localField: "categoria",
+          foreignField: "_id",
+          as: "categoria",
+        },  
+      },{ 
+        $unwind: "$categoria",
+      },{
+        $match: {
+          "categoria.nombre": "Niño",
+        },
+      },{
+        $addFields: {
+          categoria: {
+            $mergeObjects: ["$categoria", {
+              nombre_producto: "$nombre",
+              descripcion_producto: "$descripcion",
+              precio_producto: "$precio",
+              imagenURL_producto: "$imagenURL",
+              stock_producto: "$stock",
+              creado_por_producto: "$creado_por",
+            }],
+          },
+        },
+      },{
+        $project: {
+          "categoria._id": 1,
+          "categoria.nombre": 1,
+          "categoria.descripcion": 1,
+          "categoria.imagenURL": 1,
+          "categoria.creado_por": 1,
+          "categoria.nombre_producto": 1,
+          "categoria.descripcion_producto": 1,
+          "categoria.precio_producto": 1,
+          "categoria.imagenURL_producto": 1,
+          "categoria.stock_producto": 1,
+          "categoria.creado_por_producto": 1,
+        },
+      }
+    ]);
+    if (products.length === 0) {
+      return res.status(404).json({ message: "Products not found" });
+    }
+    console.log(products);
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Something goes wrong retrieving the products",
+    });
+  }
+}

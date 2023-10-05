@@ -28,7 +28,6 @@ export const UserLoginProvider = ({ children }) => {
       });
 
       if (!response.ok) {
-        console.log(response);
         // Manejo de errores si la solicitud no es exitosa
         setError("Error al iniciar sesión"); // Establece un mensaje de error genérico
       } else {

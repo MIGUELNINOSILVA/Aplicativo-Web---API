@@ -46,7 +46,7 @@ export const App = () => {
         {userLogin && <NavBar /> }
         <Routes>
         <Route
-          path={"/" || "/men" || "/woman" || "/child-boy" || "/child-girl" || "/user-information" || "/store-pay"}
+          path="/"
           element={
             userLogin ? (
               <MainContent />
