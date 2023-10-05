@@ -6,10 +6,20 @@ import { deepOrange, deepPurple } from "@mui/material/colors";
 import './../styles/NavBar.css';
 
 export const NavBar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleToggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary main-content fixed-navbar">
+    <nav className={`navbar navbar-expand-lg bg-body-tertiary main-content fixed-navbar ${menuOpen ? 'open' : ''}`}>
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/" onClick={closeMenu}>
           <img className="img-home" src="src/assets/logo.png" alt="Logo" />
         </Link>
         <button
@@ -20,52 +30,45 @@ export const NavBar = () => {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          onClick={handleToggleMenu}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div className={`collapse navbar-collapse ${menuOpen ? 'show' : ''}`} id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item d-flex justify-content-center">
-              <Link className="nav-link active" aria-current="page" to="/">
+              <Link className="nav-link active" aria-current="page" to="/" onClick={closeMenu}>
                 Home
               </Link>
             </li>
             <li className="nav-item d-flex justify-content-center">
-              <Link className="nav-link active" aria-current="page" to="/men">
+              <Link className="nav-link active" aria-current="page" to="/men" onClick={closeMenu}>
                 Hombre
               </Link>
             </li>
             <li className="nav-item d-flex justify-content-center">
-              <Link className="nav-link active" aria-current="page" to="/woman">
+              <Link className="nav-link active" aria-current="page" to="/woman" onClick={closeMenu}>
                 Mujer
               </Link>
             </li>
             <li className="nav-item d-flex justify-content-center">
-              <Link
-                className="nav-link active"
-                aria-current="page"
-                to="/child-boy"
-              >
+              <Link className="nav-link active" aria-current="page" to="/child-boy" onClick={closeMenu}>
                 Niño
               </Link>
             </li>
             <li className="nav-item d-flex justify-content-center">
-              <Link
-                className="nav-link active"
-                aria-current="page"
-                to="/child-girl"
-              >
+              <Link className="nav-link active" aria-current="page" to="/child-girl" onClick={closeMenu}>
                 Niña
               </Link>
             </li>
           </ul>
           <div className="ms-auto d-flex align-items-center justify-content-center">
-            <Link className="btn btn-outline-success me-2 " to="/store-pay">
+            <Link className="btn btn-outline-success me-2 " to="/store-pay" onClick={closeMenu}>
               <Badge badgeContent={4} color="secondary">
                 <LocalGroceryStoreIcon />
               </Badge>
             </Link>
-            <Link className="btn" to="/user-information">
+            <Link className="btn" to="/user-information" onClick={closeMenu}>
               <Avatar>H</Avatar>
             </Link>
           </div>
