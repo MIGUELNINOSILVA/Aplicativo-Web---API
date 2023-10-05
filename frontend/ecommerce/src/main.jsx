@@ -5,13 +5,16 @@ import { App } from "./App";
 import "./styles/Main.css";
 import { UserLoginProvider } from "./context/UserLoginProvider";
 import { ProductProvider } from "./context/ProductProvider";
+import { CarritoProvider } from "./context/CarritoProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <React.StrictMode>
       <UserLoginProvider>
         <ProductProvider>
-          <App />{" "}
+          <CarritoProvider>
+            <App />{" "}
+          </CarritoProvider>
         </ProductProvider>
       </UserLoginProvider>
     </React.StrictMode>

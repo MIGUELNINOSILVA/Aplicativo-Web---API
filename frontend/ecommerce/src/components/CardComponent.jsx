@@ -1,8 +1,39 @@
-import { Card, CardActions, CardContent, CardMedia, IconButton, Rating, Typography } from "@mui/material";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  IconButton,
+  Rating,
+  Typography,
+} from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import "./../styles/CardComponent.css";
+import { useState } from "react";
 
-export const CardComponent = ({title, description, ratingValue, createdByname, createdBylastname, priceValue, urlImage}) => {
+export const CardComponent = ({
+  title,
+  description,
+  ratingValue,
+  createdByname,
+  createdBylastname,
+  priceValue,
+  urlImage,
+  handleAgregar,
+  handleQuitar,
+}) => {
+  const [added, setAdded] = useState(false);
+
+  const clickAgregar = (e) => {
+    handleAgregar();
+    setAdded(true);
+  };
+
+  const clickQuitar = (e) => {
+    handleQuitar();
+    setAdded(false);
+  };
   return (
     <>
       <div className="d-flex flex-row mb-3 justify-content-between flex-wrap gap-5">
@@ -31,12 +62,12 @@ export const CardComponent = ({title, description, ratingValue, createdByname, c
           </CardContent>
           <CardActions>
             <Typography component="legend">Rating</Typography>
-            <Rating
-              name="simple-controlled"
-              value={ratingValue}
-            />
-            <IconButton aria-label="add to favorites">
-              <FavoriteBorderIcon />
+            <Rating name="simple-controlled" value={ratingValue} />
+            <IconButton
+              aria-label="add to favorites"
+              onClick={added ? clickQuitar : clickAgregar}
+            >
+              {added ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
           </CardActions>
         </Card>

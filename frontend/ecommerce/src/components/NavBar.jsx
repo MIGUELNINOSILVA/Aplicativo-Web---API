@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import { Avatar, Badge } from "@mui/material";
 import { Link } from "react-router-dom";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import './../styles/NavBar.css';
+import { CarritoContext } from "../context/CarritoContext";
 
 export const NavBar = () => {
+  const {
+    listaCompras,
+    agregarCompra,
+    aumentarCantidad,
+    disminuirCantidad,
+    eliminarCompra,
+  } = useContext(CarritoContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {
@@ -64,7 +72,7 @@ export const NavBar = () => {
           </ul>
           <div className="ms-auto d-flex align-items-center justify-content-center">
             <Link className="btn btn-outline-success me-2 " to="/store-pay" onClick={closeMenu}>
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={listaCompras.length} color="secondary">
                 <LocalGroceryStoreIcon />
               </Badge>
             </Link>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { ProductsContext } from "./ProductContext";
 
+const arrayProducts = [];
+
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [productMan, setProductMan] = useState([]);
