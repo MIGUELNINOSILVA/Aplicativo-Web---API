@@ -16,11 +16,13 @@ import { UserLoginProvider } from "./context/UserLoginProvider";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./context/UserLoginContext";
 import { ProtectedRoute } from "./utils/ProtectedRoute";
+import { ProductsContext } from "./context/ProductContext";
 
 export const App = () => {
   const { isAuthenticated, userLogin } = useContext(UserContext);
-  const {  getUser } = useContext(UserContext);
+  const { getUser } = useContext(UserContext);
   const token = localStorage.getItem("user-token");
+  const { productMan, getProductsMan, productWoman, getProductsWoman } = useContext(ProductsContext);
   const tokenObject = JSON.parse(token);
   const [userData, setUserData] = useState({
     nombre: "",
@@ -28,10 +30,11 @@ export const App = () => {
     email: "",
     password: "",
   });
-  
   const fetchData = async () => {
     const userResponse = await getUser(tokenObject);
-    setUserData(userResponse.user)
+    setUserData(userResponse.user);
+    await getProductsMan(tokenObject);
+    await getProductsWoman(tokenObject);
   };
 
   useEffect(() => {
@@ -42,45 +45,81 @@ export const App = () => {
 
   return (
     <>
-      <ProductProvider>
-        {userLogin && <NavBar /> }
+        {userLogin && <NavBar />}
         <Routes>
-        <Route
-          path="/"
-          element={
-            userLogin ? (
-              <MainContent />
-            ) : (
-              <Navigate to="/sign-in" replace /> 
-            )
-          }
-        />
-          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/" />}>
+          <Route
+            path="/"
+            element={
+              userLogin ? <MainContent /> : <Navigate to="/sign-in" replace />
+            }
+          />
+          <Route
+            element={
+              <ProtectedRoute canActivate={userLogin} redirectPath="/" />
+            }
+          >
             <Route path="/" element={<MainContent />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/men" />}>
-            <Route path="/men" element={<HombrePage />} />
+          <Route
+            element={
+              <ProtectedRoute canActivate={userLogin} redirectPath="/men" />
+            }
+          >
+            <Route path="/men" element={<HombrePage menProducts={productMan} />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/woman" />}>
-            <Route path="/woman" element={<MujerPage />} />
+          <Route
+            element={
+              <ProtectedRoute canActivate={userLogin} redirectPath="/woman" />
+            }
+          >
+            <Route path="/woman" element={<MujerPage womanProducts={productWoman} />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/child-boy" />}>
+          <Route
+            element={
+              <ProtectedRoute
+                canActivate={userLogin}
+                redirectPath="/child-boy"
+              />
+            }
+          >
             <Route path="/child-boy" element={<NinoPage />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/child-girl" />}>
+          <Route
+            element={
+              <ProtectedRoute
+                canActivate={userLogin}
+                redirectPath="/child-girl"
+              />
+            }
+          >
             <Route path="/child-girl" element={<NinaPage />} />
           </Route>
-          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/user-information" />}>
-            <Route path="/user-information" element={<User dataUser={userData} />} />
+          <Route
+            element={
+              <ProtectedRoute
+                canActivate={userLogin}
+                redirectPath="/user-information"
+              />
+            }
+          >
+            <Route
+              path="/user-information"
+              element={<User dataUser={userData} />}
+            />
           </Route>
-          <Route element={<ProtectedRoute canActivate={userLogin} redirectPath="/store-pay" />}>
+          <Route
+            element={
+              <ProtectedRoute
+                canActivate={userLogin}
+                redirectPath="/store-pay"
+              />
+            }
+          >
             <Route path="/store-pay" element={<StorePage />} />
           </Route>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-
         </Routes>
-      </ProductProvider>
     </>
   );
 };

@@ -89,7 +89,18 @@ export const getProductsMen = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "usuarios",
+          localField: "creado_por",
+          foreignField: "_id",
+          as: "creado_por",
+        },
+      },
+      {
         $unwind: "$categoria",
+      },
+      {
+        $unwind: "$creado_por",
       },
       {
         $match: {
@@ -105,10 +116,20 @@ export const getProductsMen = async (req, res) => {
               precio_producto: "$precio",
               imagenURL_producto: "$imagenURL",
               stock_producto: "$stock",
-              creado_por_producto: "$creado_por",
+              rating: "$rating"
             }],
           },
         },
+      },
+      {
+        $addFields: {
+          creado_por: {
+            $mergeObjects: ["$creado_por", {
+              nombre: "$creado_por.nombre",
+              apellido: "$creado_por.apellido",
+            }],
+          },
+        }
       },
       {
         $project: {
@@ -116,13 +137,15 @@ export const getProductsMen = async (req, res) => {
           "categoria.nombre": 1,
           "categoria.descripcion": 1,
           "categoria.imagenURL": 1,
-          "categoria.creado_por": 1,
           "categoria.nombre_producto": 1,
           "categoria.descripcion_producto": 1,
           "categoria.precio_producto": 1,
           "categoria.imagenURL_producto": 1,
           "categoria.stock_producto": 1,
           "categoria.creado_por_producto": 1,
+          "categoria.rating": 1,
+          "creado_por.nombre": 1, 
+          "creado_por.apellido": 1, 
         },
       },
     ]);
@@ -137,7 +160,7 @@ export const getProductsMen = async (req, res) => {
     });
   }
 };
-export const getProductsWoman = async(req, res)=>{
+export const getProductsWoman = async (req, res) => {
   try {
     const products = await Product.aggregate([
       {
@@ -147,40 +170,73 @@ export const getProductsWoman = async(req, res)=>{
           foreignField: "_id",
           as: "categoria",
         },
-      },{
+      },
+      {
+        $lookup: {
+          from: "usuarios",
+          localField: "creado_por",
+          foreignField: "_id",
+          as: "creado_por",
+        },
+      },
+      {
         $unwind: "$categoria",
-      },{
+      },
+      {
+        $unwind: "$creado_por",
+      },
+      {
         $match: {
           "categoria.nombre": "Mujer",
         },
-      },{
+      },
+      {
         $addFields: {
           categoria: {
-            $mergeObjects: ["$categoria", {
-              nombre_producto: "$nombre",
-              descripcion_producto: "$descripcion",
-              precio_producto: "$precio",
-              imagenURL_producto: "$imagenURL",
-              stock_producto: "$stock",
-              creado_por_producto: "$creado_por",
-            }],
+            $mergeObjects: [
+              "$categoria",
+              {
+                nombre_producto: "$nombre",
+                descripcion_producto: "$descripcion",
+                precio_producto: "$precio",
+                imagenURL_producto: "$imagenURL",
+                stock_producto: "$stock",
+                rating: "$rating",
+              },
+            ],
           },
         },
-      },{
+      },
+      {
+        $addFields: {
+          creado_por: {
+            $mergeObjects: [
+              "$creado_por",
+              {
+                nombre: "$creado_por.nombre",
+                apellido: "$creado_por.apellido",
+              },
+            ],
+          },
+        },
+      },
+      {
         $project: {
           "categoria._id": 1,
           "categoria.nombre": 1,
           "categoria.descripcion": 1,
           "categoria.imagenURL": 1,
-          "categoria.creado_por": 1,
           "categoria.nombre_producto": 1,
           "categoria.descripcion_producto": 1,
           "categoria.precio_producto": 1,
           "categoria.imagenURL_producto": 1,
           "categoria.stock_producto": 1,
           "categoria.creado_por_producto": 1,
+          "categoria.rating": 1,
+          "creado_por.nombre": 1,
+          "creado_por.apellido": 1,
         },
-      }
+      },
     ]);
     if (products.length === 0) {
       return res.status(404).json({ message: "Products not found" });
@@ -192,7 +248,9 @@ export const getProductsWoman = async(req, res)=>{
       message: error.message || "Something goes wrong retrieving the products",
     });
   }
-}
+};
+
+
 export const getProductsChildBoy = async(req, res)=>{
   try {
     const products = await Product.aggregate([
@@ -203,9 +261,22 @@ export const getProductsChildBoy = async(req, res)=>{
           foreignField: "_id",
           as: "categoria",
         },  
-      },{ 
+      },
+      {
+        $lookup:{
+          from: "usuarios",
+          localField: "creado_por",
+          foreignField: "_id",
+          as: "creado_por"
+        }
+      },
+      { 
         $unwind: "$categoria",
-      },{
+      },
+      {
+        $unwind: "$creado_por",
+      },
+      {
         $match: {
           "categoria.nombre": "Niño",
         },
@@ -219,10 +290,21 @@ export const getProductsChildBoy = async(req, res)=>{
               imagenURL_producto: "$imagenURL",
               stock_producto: "$stock",
               creado_por_producto: "$creado_por",
+              rating: "$rating",
             }],
           },
         },
-      },{
+      },
+      {
+        $addFields: {
+          creado_por: {
+            $mergeObjects: ["$creado_por", {
+              nombre: "$creado_por.nombre",
+            }],
+          },
+        },
+      },
+      {
         $project: {
           "categoria._id": 1,
           "categoria.nombre": 1,
@@ -235,6 +317,7 @@ export const getProductsChildBoy = async(req, res)=>{
           "categoria.imagenURL_producto": 1,
           "categoria.stock_producto": 1,
           "categoria.creado_por_producto": 1,
+          "categoria.rating": 1
         },
       }
     ]);

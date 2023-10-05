@@ -2,37 +2,38 @@ import { Card, CardActions, CardContent, CardMedia, IconButton, Rating, Typograp
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import "./../styles/CardComponent.css";
 
-export const CardComponent = () => {
+export const CardComponent = ({title, description, ratingValue, createdByname, createdBylastname, priceValue, urlImage}) => {
   return (
     <>
       <div className="d-flex flex-row mb-3 justify-content-between flex-wrap gap-5">
         <Card sx={{ maxWidth: 345 }}>
           <CardMedia
             sx={{ height: 150, width: 150, marginLeft: 5 }}
-            image="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"
+            image={`${urlImage}`}
             title="shirt"
+            alt={title}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              Mens Casual Premium Slim Fit T-Shirts
+              {title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Slim-fitting style, contrast raglan long sleeve, three-button
-              henley placket, light weight & soft fabric for breathable and
-              comfortable wearing. And Solid stitched shirts with round neck
-              made for durability and a great fit for casual fashion wear and
-              diehard baseball fans. The Henley style round neckline includes a
-              three-button placket.
+              {description}
+            </Typography>
+            <br />
+            <Typography variant="body2" color="text.primary">
+              Publicado por: {createdByname} {createdBylastname}
+            </Typography>
+            <br />
+            <Typography variant="body2" color="text.primary">
+              Precio: ${priceValue}
             </Typography>
           </CardContent>
           <CardActions>
             <Typography component="legend">Rating</Typography>
             <Rating
               name="simple-controlled"
-              value={5}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
+              value={ratingValue}
             />
             <IconButton aria-label="add to favorites">
               <FavoriteBorderIcon />
