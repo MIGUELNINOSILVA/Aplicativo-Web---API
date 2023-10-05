@@ -11,48 +11,32 @@ import "./styles/App.css";
 import { User } from "./Pages/User";
 import { SignUp } from "./components/SignUp";
 import { SignIn } from "./components/SignIn";
+import { ProductsContext } from "./context/ProductContext";
+import { ProductProvider } from "./context/ProductProvider";
+import { UserLoginProvider } from "./context/UserLoginProvider";
 
 const isAuthenticated = () => {
   return false;
 };
 
-const ProtectedRoute = ({ element, ...rest }) => {
-  return isAuthenticated() ? (
-    <Route {...rest} element={element}></Route>
-  ) : (
-    <Navigate to="/sign-in" />
-  );
-};
-
 export const App = () => {
-  const user = {
-    name: "Juan",
-    lastName: "Perez",
-    email: "juan@gmail.com",
-  };
-  {
-    /* <Route path="/" element={<MainContent />} />
-      <Route path="/men" element={<HombrePage />} />
-      <Route path="/woman" element={<MujerPage />} />
-      <Route path="/child-boy" element={<NinoPage />} />
-      <Route path="/child-girl" element={<NinaPage />} />
-      <Route path="/store-pay" element={<StorePage />} />
-      <Route path="/user-information" element={<User />} /> */
-  }
-
   return (
     <>
-      <Routes>
-        {!isAuthenticated() && null}
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route
-          path="/*"
-          element={
-            isAuthenticated() ? (
+      <UserLoginProvider>
+        <ProductProvider>
+          <Routes>
+            {!isAuthenticated() && null}
+            {isAuthenticated() ? (
               <>
-                <NavBar />
-                <MainContent />
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      <NavBar />
+                      <MainContent />
+                    </>
+                  }
+                />
                 <Route path="/men" element={<HombrePage />} />
                 <Route path="/woman" element={<MujerPage />} />
                 <Route path="/child-boy" element={<NinoPage />} />
@@ -61,11 +45,13 @@ export const App = () => {
                 <Route path="/user-information" element={<User />} />
               </>
             ) : (
-              <Navigate to="/sign-in" />
-            )
-          }
-        />
-      </Routes>
+              <Route path="/" element={<Navigate to="/sign-in"></Navigate>} />
+            )}
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+          </Routes>
+        </ProductProvider>
+      </UserLoginProvider>
     </>
   );
 };
