@@ -9,12 +9,16 @@ import { StorePage } from "./Pages/StorePage";
 
 import "./styles/App.css";
 import { User } from "./Pages/User";
+import {SignUp} from "./components/SignUp";
+import {SignIn} from "./components/SignIn";
 
 export const App = () => {
   return (
     <>
       <NavBar />
       <Routes>
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="/" element={<MainContent />} />
         <Route path="/men" element={<HombrePage />} />
         <Route path="/woman" element={<MujerPage />} />
