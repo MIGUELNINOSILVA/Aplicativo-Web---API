@@ -1,15 +1,14 @@
-import { Alert, AlertTitle, Snackbar } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import { UserContext } from "./UserLoginContext";
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {useLocalStorage} from "react-use";
+import { useLocalStorage } from "react-use";
 
 export const UserLoginProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
 
   const [user, setUser] = useState({
     email: "",
@@ -17,6 +16,7 @@ export const UserLoginProvider = ({ children }) => {
   });
   const [token, setToken] = useState("");
   const [userLogin, setUserLogin] = useLocalStorage('user-token', "");
+  
   const signInApi = async (email, password) => {
     try {
       const response = await fetch("http://localhost:4000/api/auth/signin", {
@@ -28,18 +28,18 @@ export const UserLoginProvider = ({ children }) => {
       });
 
       if (!response.ok) {
+        console.log(response);
         // Manejo de errores si la solicitud no es exitosa
-        throw new Error("Error al iniciar sesión");
+        setError("Error al iniciar sesión"); // Establece un mensaje de error genérico
+      } else {
+        const data = await response.json();
+        setToken(data.token);
+        setIsAuthenticated(true);
+        setUserLogin(data.token);
+        navigate("/");
       }
-
-      const data = await response.json();
-      setToken(data.token);
-      setIsAuthenticated(true);
-      setUserLogin(data.token);
-      navigate("/");
-
     } catch (error) {
-      error.message = "Error al iniciar sesión" ? setError(error.message) : false;
+      setError("Error al iniciar sesión"); // Establece un mensaje de error genérico
     }
   };
 
@@ -66,7 +66,6 @@ export const UserLoginProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
 
-
   // Material UI
   const [open, setOpen] = useState(false);
 
@@ -76,6 +75,7 @@ export const UserLoginProvider = ({ children }) => {
 
   const handleClose = () => {
     setOpen(false);
+    setError(null); // Limpia el error después de cerrar el Snackbar
   };
 
   useEffect(() => {
@@ -88,6 +88,7 @@ export const UserLoginProvider = ({ children }) => {
       }, 2000);
     }
   }, [error]);
+
   useEffect(() => {
     // Verifica si el usuario está autenticado
     if (token) {
@@ -104,7 +105,7 @@ export const UserLoginProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ token, addUser, isAuthenticated, signOut, userLogin,userData, getUser }}>
+    <UserContext.Provider value={{ token, addUser, isAuthenticated, signOut, userLogin, userData, getUser }}>
       {children}
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
