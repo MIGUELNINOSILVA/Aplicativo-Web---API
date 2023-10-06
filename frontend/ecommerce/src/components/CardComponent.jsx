@@ -31,8 +31,8 @@ export const CardComponent = ({
   };
 
   const clickQuitar = (e) => {
-    handleQuitar();
     setAdded(false);
+    handleQuitar();
   };
   return (
     <>

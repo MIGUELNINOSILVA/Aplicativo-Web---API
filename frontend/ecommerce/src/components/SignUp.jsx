@@ -1,4 +1,4 @@
-import * as React from "react";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,6 +13,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { UserRegisterContext } from "../context/UserRegisterContext";
+import { useContext } from "react";
 
 function Copyright(props) {
   return (
@@ -36,13 +38,23 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export function SignUp() {
+  const {submitChange} = useContext(UserRegisterContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      nombre: data.get("Primer nombre"),
+      apellido: data.get("apellido"),
       email: data.get("email"),
       password: data.get("password"),
     });
+    submitChange({
+      nombre: data.get("Primer nombre"),
+      apellido: data.get("apellido"),
+      email: data.get("email"),
+      password: data.get("password"),
+    })
+    
   };
 
   return (
@@ -99,6 +111,7 @@ export function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  type="email"
                 />
               </Grid>
               <Grid item xs={12}>
