@@ -28,7 +28,7 @@ export const NavBar = () => {
     <nav className={`navbar navbar-expand-lg bg-body-tertiary main-content fixed-navbar ${menuOpen ? 'open' : ''}`}>
       <div className="container-fluid">
         <Link className="navbar-brand" to="/" onClick={closeMenu}>
-          <img className="img-home" src="src/assets/logo.png" alt="Logo" />
+          <img className="img-home" src="src/assets/logo.svg" alt="Logo" />
         </Link>
         <button
           className="navbar-toggler"

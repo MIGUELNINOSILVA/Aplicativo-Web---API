@@ -20,7 +20,7 @@ export const User = ({ dataUser }) => {
     <div className="container main-content">
       <div className="user-main-card">
         <div className="user-logo d-flex justify-content-center ">
-          <img src="src/assets/logo.png" alt="" />
+          <img src="src/assets/logo.svg" alt="" style={{width: '15rem'}} />
         </div>
         <div className="user-form d-flex justify-content-center p-5">
           <form className="container">

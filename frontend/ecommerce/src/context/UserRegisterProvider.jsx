@@ -17,10 +17,6 @@ export const UserRegisterProvider = ({ children }) => {
       });
       const response = await request.json();
       console.log(response);
-      setToken(data.token);
-        setIsAuthenticated(true);
-        setUserLogin(data.token);
-        navigate("/");
     } catch (error) {
       console.log(error);
     }
