@@ -1,0 +1,415 @@
+{
+	"info": {
+		"_postman_id": "73bb8180-57c1-4c6a-9dcb-0bc6282104a7",
+		"name": "APLICATIVO WEB PRE FILTRO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27129339"
+	},
+	"item": [
+		{
+			"name": "PRODUCTOS",
+			"item": [
+				{
+					"name": "Obtener todos los productos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWUyNWY4NjQ3ZmFjYTlkOTg3Y2IxOSIsImlhdCI6MTY5NjUyMDY4NCwiZXhwIjoxNjk2NjA3MDg0fQ.yKFCYad0OVfM67FEmi3Il1wpJu7bzAoU__cpf5AjZJU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:4000/api/products",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar nuevo producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Mens Casual Premium Slim Fit T-Shirts\",\r\n  \"descripcion\": \"Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket\",\r\n  \"precio\": 22.3,\r\n  \"imagenURL\": \"https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg\",\r\n  \"categoria\": \"651e0e8a93553123947f9b09\",\r\n  \"stock\": 1,\r\n  \"creado_por\": \"651e0ce293553123947f9ae6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/products",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener producto por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/products/651e104b93553123947f9b16",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"products",
+								"651e104b93553123947f9b16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar producto por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/api/products/651e104b93553123947f9b16",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"products",
+								"651e104b93553123947f9b16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar producto por ID",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Mens Casual Premium Slim Fit T-Shirts\",\r\n  \"descripcion\": \"Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket\",\r\n  \"precio\": 25.3,\r\n  \"imagenURL\": \"https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg\",\r\n  \"categoria\": \"651e0e8a93553123947f9b09\",\r\n  \"stock\": 1,\r\n  \"creado_por\": \"651e0ce293553123947f9ae6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/products/651e104b93553123947f9b16",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"products",
+								"651e104b93553123947f9b16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los productos de los hombres",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWUyNWY4NjQ3ZmFjYTlkOTg3Y2IxOSIsImlhdCI6MTY5NjUyMDY4NCwiZXhwIjoxNjk2NjA3MDg0fQ.yKFCYad0OVfM67FEmi3Il1wpJu7bzAoU__cpf5AjZJU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:4000/api/products/men-products",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"products",
+								"men-products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los productos de las mujeres",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWUyNTZhOTZjNDUxMGQ3MjljMDlmMyIsImlhdCI6MTY5NjUzNzQ1MCwiZXhwIjoxNjk2NjIzODUwfQ.qEE9KmAlzrDjzxG9UC8C8eQytuR8nzc-Ss0gKsgfuyM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:4000/api/products/woman-products",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"products",
+								"woman-products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los productos de los niños",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWUyNTZhOTZjNDUxMGQ3MjljMDlmMyIsImlhdCI6MTY5NjUzNzQ1MCwiZXhwIjoxNjk2NjIzODUwfQ.qEE9KmAlzrDjzxG9UC8C8eQytuR8nzc-Ss0gKsgfuyM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:4000/api/products/boy-products",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"products",
+								"boy-products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los productos de las niñas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWUyNTZhOTZjNDUxMGQ3MjljMDlmMyIsImlhdCI6MTY5NjUzNzQ1MCwiZXhwIjoxNjk2NjIzODUwfQ.qEE9KmAlzrDjzxG9UC8C8eQytuR8nzc-Ss0gKsgfuyM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:4000/api/products/girl-products",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"products",
+								"girl-products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "SIGN UP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \r\n    \"nombre\": \"Jose\",\r\n    \"apellido\": \"Vargas\",\r\n    \"email\": \"jose@gmail.com\",\r\n    \"password\": \"josepass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SIGN IN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"miguel@gmail.com\",\r\n    \"password\": \"miguelpass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/auth/signin",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USARIOS",
+			"item": [
+				{
+					"name": "Editar usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "handleEditUser",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Migueliño\",\r\n    \"apellido\": \"Piyo\",\r\n    \"email\": \"miguel@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/users/edit-user/",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"users",
+								"edit-user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OBTENER DATOS DEL USUARIO CON EL TOKEN",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWUyNWY4NjQ3ZmFjYTlkOTg3Y2IxOSIsImlhdCI6MTY5NjUxMDk0MSwiZXhwIjoxNjk2NTk3MzQxfQ.g315qOGfUQ42WajfQ4lMTsaiv-ut7DXwhiAhGYMbLTg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:4000/api/users/user-data",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"users",
+								"user-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Encontrar y actualizar usuario por su correo electronico",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWUyNTZhOTZjNDUxMGQ3MjljMDlmMyIsImlhdCI6MTY5NjYwMDIzOSwiZXhwIjoxNjk2Njg2NjM5fQ.SofAfek-BXWxo3Ra1frchaOfdycpZjeY3-bDkSu6kCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Miguel\",\r\n    \"apellido\": \"Silva\",\r\n    \"email\": \"miguel@gmail.com\",\r\n    \"password\": \"miguelpass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/api/users/edit-user/find-and-update-user",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"users",
+								"edit-user",
+								"find-and-update-user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
