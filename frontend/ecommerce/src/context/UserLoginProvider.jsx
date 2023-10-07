@@ -9,6 +9,7 @@ export const UserLoginProvider = ({ children }) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState(null);
+  const [userToken, setUserToken] = useState("");
 
   const [user, setUser] = useState({
     email: "",
@@ -53,6 +54,30 @@ export const UserLoginProvider = ({ children }) => {
       const userDataresponse = await user.json();
       setUserData(userDataresponse);
       return userDataresponse;
+  }
+
+  const editUser = async (tokenGenerateLocal, userData) => {
+    try {
+      const response = await fetch("http://localhost:4000/api/users/edit-user/find-and-update-user", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": tokenGenerateLocal,
+        },
+        body: JSON.stringify(userData),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError("Error al editar usuario.");
+      } else {
+        setError("Usuario editado correctamente.");
+        await getUser(tokenGenerateLocal);  
+        window.location.reload();
+      }
+
+    } catch (error) {
+       setError("Error al editar usuario.");
+    }
   }
 
   const addUser = (email, password) => {
@@ -104,7 +129,7 @@ export const UserLoginProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ token, addUser, isAuthenticated, signOut, userLogin, userData, getUser }}>
+    <UserContext.Provider value={{ token, addUser, isAuthenticated, signOut, userLogin, userData, getUser, editUser,setUserToken, userToken }}>
       {children}
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>

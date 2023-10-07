@@ -19,12 +19,13 @@ import { ProtectedRoute } from "./utils/ProtectedRoute";
 import { ProductsContext } from "./context/ProductContext";
 
 export const App = () => {
-  const { isAuthenticated, userLogin } = useContext(UserContext);
+  const { isAuthenticated, userLogin, setUserToken } = useContext(UserContext);
   const { getUser } = useContext(UserContext);
   const { productMan, getProductsMan, productWoman, getProductsWoman, getProductsBoy, productBoy,getProductsGirl, productGirl } =
     useContext(ProductsContext);
   const token = localStorage.getItem("user-token");
   const tokenObject = JSON.parse(token);
+  setUserToken(tokenObject);
   const [userData, setUserData] = useState({
     nombre: "",
     apellido: "",

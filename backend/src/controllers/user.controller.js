@@ -30,3 +30,56 @@ export const verifyTokenUser = async(req, res)=>{
     });
   }
 }
+
+export const editUser = async (req, res) => {
+  try {
+    const { nombre, apellido, email, password } = req.body;
+    const user = await Usuario.findByIdAndUpdate(req.params._id, {
+      nombre,
+      apellido,
+      email,
+      password: await Usuario.encryptPassword(password),
+    });
+
+    res.status(200).json({
+      message: "Usuario actualizado correctamente",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al actualizar el usuario",
+      error,
+    });
+  }
+}
+
+export const findUserByEmailAndUpdate = async (req, res) => {
+  try {
+    const { nombre, apellido, email, password } = req.body;
+    const user = await Usuario.findOneAndUpdate(
+      { email: email }, // Filtra por el correo electrónico
+      {
+        nombre,
+        apellido,
+        email,
+        password: await Usuario.encryptPassword(password),
+      },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    } else {
+      res.status(200).json({
+        message: "Usuario actualizado correctamente",
+        user,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Error al buscar y actualizar el usuario",
+      error: error.message,
+    });
+  }
+};

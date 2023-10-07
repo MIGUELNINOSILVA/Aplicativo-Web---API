@@ -3,13 +3,25 @@ import { Button, Input } from "@mui/material";
 import { UserContext } from "../context/UserLoginContext";
 
 export const User = ({ dataUser }) => {
-  const { signOut } = useContext(UserContext);
+  const { signOut, editUser, userToken } = useContext(UserContext);
   const [userData, setUserData] = useState(dataUser || {});
 
   const handleSignOut = (event) => {
     event.preventDefault();
     signOut();
   };
+
+  const handleEditUser = (event) => {
+    event.preventDefault();
+    
+    const dataUser = {
+      nombre: userData.nombre,
+      apellido: userData.apellido,
+      email: userData.email,
+      password: userData.password,
+    }
+    editUser(userToken, userData);
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +35,7 @@ export const User = ({ dataUser }) => {
           <img src="src/assets/logo.svg" alt="" style={{width: '15rem'}} />
         </div>
         <div className="user-form d-flex justify-content-center p-5">
-          <form className="container">
+          <form className="container" onSubmit={handleEditUser}>
             <div className="form-group col-auto">
               <label htmlFor="nombre">Nombre</label>
               <input
